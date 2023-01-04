@@ -3,20 +3,26 @@ package hello.hellospring.service;
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.thymeleaf.expression.Numbers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 class MemberServiceTest {
 
-    MemberService memberService;
-    MemoryMemberRepository memberRepository;
+    private static MemberService memberService;
+    private static MemoryMemberRepository memberRepository;
 
     //동작하기 전에
-    @BeforeEach
-    public void beforeEach(){
+    @BeforeAll
+    public static void beforeAll(){
         memberRepository = new MemoryMemberRepository();
         memberService = new MemberService(memberRepository); //이러면 같은 MemoryMemberRepository 객체를 사용한다.
     }
@@ -44,7 +50,39 @@ class MemberServiceTest {
 
         //then
         Member findMember = memberService.findOne(saveId).get();
-        assertThat(member.getName()).isEqualTo(findMember.getName());
+//        assertThat(member.getName()).isEqualTo(findMember.getName());
+
+//        assertEquals(member,findMember);
+        assertSame(member,findMember);
+    }
+
+    @Test
+    void 계산(){
+        assertAll(
+                ()-> assertEquals(1,2-1),
+                ()-> assertEquals(2,1-1)
+        );
+    }
+
+    @Test
+    void assumeTrue테스트(){
+        assumeTrue("DEV".equals(System.getenv("ENV")), ()-> "개발 환경이 아닙니다.");
+        assertEquals("A","A"); //단정문이 실행되지 않음.
+    }
+
+    @Test
+    void assumingThat테스트(){
+        assumingThat("DEV".equals(System.getenv("ENV")),
+                ()->{
+                    assertEquals("A","B"); //단정문이 실행되지 않음
+                });
+        assertEquals("A","A"); //단정문이 실행됨.
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 3, 5, -3, 15, Integer.MAX_VALUE}) // six numbers
+    void isOdd_ShouldReturnTrueForOddNumbers(int number) {
+        assertTrue(number%2==1);
 
     }
 
