@@ -37,7 +37,6 @@ public class FrontControllerServletV2 extends HttpServlet {
         }
 
         Myview view = controller.process(request, response);
-        System.out.println("view = " + view);
         view.render(request,response);
     }
 }
