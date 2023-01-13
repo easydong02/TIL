@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-@Slf4j
-@Controller
-public class RequestParamController {
+    @Slf4j
+    @Controller
+    public class RequestParamController {
 
-    @RequestMapping("/request-param-v1")
+        @RequestMapping("/request-param-v1")
     public void requestParamV1(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         int age= Integer.parseInt(request.getParameter("age"));
