@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ItemRepositoryTest {
     ItemRepository itemRepository = new ItemRepository();
@@ -64,6 +63,5 @@ class ItemRepositoryTest {
         assertThat(findItem.getItemName()).isEqualTo(updateParam.getItemName());
         assertThat(findItem.getPrice()).isEqualTo(updateParam.getPrice());
         assertThat(findItem.getQuantity()).isEqualTo(updateParam.getQuantity());
-
     }
 }
