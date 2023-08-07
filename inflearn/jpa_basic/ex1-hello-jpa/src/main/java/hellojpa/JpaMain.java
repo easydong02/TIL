@@ -39,6 +39,21 @@ public class JpaMain {
 
 //            findMember.setName("dhshin2");
 
+            //비영속
+            Member member = new Member();
+            member.setId(100L);
+            member.setName("donghee");
+
+
+            //영속(그러나 이때 DB에 insert되는 것이 아니다.)
+            em.persist(member);
+
+            //영속해제
+            em.detach(member);
+
+            //db삭제
+            //em.remove(member);
+
             tx.commit();
         }catch (Exception e){
             tx.rollback();
