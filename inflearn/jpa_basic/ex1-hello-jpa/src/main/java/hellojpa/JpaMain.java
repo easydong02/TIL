@@ -37,19 +37,19 @@ public class JpaMain {
             //em.persist(findMember); 삽입
             //em.remove(findMember); 삭제
 
-//            findMember.setName("dhshin2");
+            //findMember.setName("dhshin2"); 수정
 
             //비영속
-            Member member = new Member();
-            member.setId(100L);
-            member.setName("donghee");
+            Member member = new Member(150L,"A");
+            Member member2 = new Member(150L,"B");
 
 
             //영속(그러나 이때 DB에 insert되는 것이 아니다.)
             em.persist(member);
+            em.persist(member2);
 
             //영속해제
-            em.detach(member);
+            //em.detach(member);
 
             //db삭제
             //em.remove(member);
