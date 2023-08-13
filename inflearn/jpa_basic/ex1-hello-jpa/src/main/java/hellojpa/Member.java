@@ -11,7 +11,6 @@ public class Member {
 
     @Id
     private Long id;
-
     @Column(name = "name")
     private String name;
 
