@@ -12,12 +12,16 @@ import javax.persistence.*;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq_generator")
+    @GeneratedValue(strategy = GenerationType.AUTO)
 //    @GeneratedValue(strategy = GenerationType.TABLE,
 //            generator = "MEMBER_SEQ_GENERATOR")
     private Integer id;
     @Column(name = "name", nullable = false)
     private String username;
+
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
 
     public Integer getId() {
         return id;
@@ -35,7 +39,11 @@ public class Member {
         this.username = username;
     }
 
-    public Member() {
+    public Team getTeam() {
+        return team;
     }
 
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 }
