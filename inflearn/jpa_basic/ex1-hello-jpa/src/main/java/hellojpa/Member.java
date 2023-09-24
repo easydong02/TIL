@@ -3,7 +3,7 @@ package hellojpa;
 import javax.persistence.*;
 
 @Entity
-@SequenceGenerator(name = "member_seq_generator", sequenceName = "mem_seq", initialValue = 1, allocationSize = 50)
+//@SequenceGenerator(name = "member_seq_generator", sequenceName = "mem_seq", initialValue = 1, allocationSize = 50)
 //@TableGenerator(
 //        name = "MEMBER_SEQ_GENERATOR",
 //        table = "MY_SEQUENCES",
@@ -12,15 +12,16 @@ import javax.persistence.*;
 public class Member {
 
     @Id
+    @Column(name = "MEMBER_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
 //    @GeneratedValue(strategy = GenerationType.TABLE,
 //            generator = "MEMBER_SEQ_GENERATOR")
     private Integer id;
-    @Column(name = "name", nullable = false)
+    @Column(name = "USER_NAME", nullable = false)
     private String username;
 
     @ManyToOne
-    @JoinColumn(name = "TEAM_ID")
+    @JoinColumn(insertable = false, updatable = false, name = "TEAM_ID") //읽기 전용 필드 옵션
     private Team team;
 
     public Integer getId() {
@@ -37,18 +38,5 @@ public class Member {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
-    public void changeTeam(Team team) {
-        this.team = team;
-        team.getMembers().add(this);
     }
 }
