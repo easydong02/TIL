@@ -1,22 +1,32 @@
 package jpabook.jpashop.domain;
 
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Item {
+public class Category {
 
     @Id @GeneratedValue
-    @Column(name = "ITEM_ID")
+    @Column(name = "CATEGORY_ID")
     private Long id;
 
     private String name;
-    private int price;
-    private int stockQuantity;
 
-    @ManyToMany(mappedBy = "items")
+    @ManyToOne
+    @JoinColumn(name = "PARENT_ID")
+    private Category parent;
+
+    @OneToMany(mappedBy = "parent")
     private List<Category> categoryList = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "CATEGORY_ITEM",
+            joinColumns = @JoinColumn(name = "CATEGORY_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ITEM_ID")
+    )
+    private List<Item> items = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -34,20 +44,12 @@ public class Item {
         this.name = name;
     }
 
-    public int getPrice() {
-        return price;
+    public Category getParent() {
+        return parent;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public int getStockQuantity() {
-        return stockQuantity;
-    }
-
-    public void setStockQuantity(int stockQuantity) {
-        this.stockQuantity = stockQuantity;
+    public void setParent(Category parent) {
+        this.parent = parent;
     }
 
     public List<Category> getCategoryList() {
@@ -56,5 +58,13 @@ public class Item {
 
     public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }
