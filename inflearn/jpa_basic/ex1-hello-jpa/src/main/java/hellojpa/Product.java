@@ -1,9 +1,6 @@
 package hellojpa;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,20 +8,13 @@ import java.util.List;
 public class Product {
 
     @Id @GeneratedValue
+    @Column(name = "PRODUCT_ID")
     private Long id;
 
     private String name;
 
-    @ManyToMany(mappedBy = "productList")
-    private List<Member> memberList = new ArrayList<>();
-
-    public List<Member> getMemberList() {
-        return memberList;
-    }
-
-    public void setMemberList(List<Member> memberList) {
-        this.memberList = memberList;
-    }
+    @OneToMany(mappedBy = "product")
+    private List<MemberProduct> memberProducts = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -40,5 +30,13 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<MemberProduct> getMemberProducts() {
+        return memberProducts;
+    }
+
+    public void setMemberProducts(List<MemberProduct> memberProducts) {
+        this.memberProducts = memberProducts;
     }
 }
