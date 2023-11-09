@@ -25,11 +25,10 @@ public class JpaBookMain {
 
             List<Customer> customers = customerTypedQuery.getResultList();
 
-            Person person = new Person();
-            person.setName("John");
-            person.setAge(25);
-
-            em.persist(person);
+            MyEntity myEntity = new MyEntity();
+            myEntity.setId(1089l);
+            myEntity.setName("john");
+            em.persist(myEntity);
 
             tx.commit();
         }catch (Exception e){

@@ -1,10 +1,7 @@
 package jpaBook;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Customer {
@@ -15,6 +12,10 @@ public class Customer {
 
     private String firstName;
     private String lastName;
+    private String email;
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
 
     public Long getId() {
         return id;
@@ -38,5 +39,21 @@ public class Customer {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

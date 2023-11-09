@@ -1,18 +1,19 @@
 package jpaBook;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Person {
+public class MyEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+//    @Id
+//    private Long id2;
+
     private String name;
-    private Integer age;
 
     public Long getId() {
         return id;
@@ -30,11 +31,16 @@ public class Person {
         this.name = name;
     }
 
-    public Integer getAge() {
-        return age;
-    }
+//    public Long getId2() {
+//        return id2;
+//    }
+//
+//    public void setId2(Long id2) {
+//        this.id2 = id2;
+//    }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+//    public class MyEntityId implements Serializable{
+//        private Long id;
+//        private Long id2;
+//    }
 }
