@@ -23,12 +23,11 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setCreatedBy("kim");
-            member.setCreateDate(LocalDateTime.now());
-            member.setUsername("John");
+            Book book = new Book();
+            book.setName("JPA");
+            book.setAuthor("신동희");
 
-            em.persist(member);
+            em.persist(book);
 
             tx.commit();
         }catch (Exception e){

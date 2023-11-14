@@ -4,16 +4,24 @@ import javax.persistence.*;
 
 @Entity
 //@Inheritance(strategy = InheritanceType.JOINED)
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn
-public abstract class Item {
+public abstract class Item extends BaseEntity{
 
     @Id @GeneratedValue
     private Long id;
-
     private String name;
     private int price;
+    private int stockQuantity;
+
+    public int getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
 
     public Long getId() {
         return id;
