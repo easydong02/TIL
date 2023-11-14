@@ -11,7 +11,7 @@ import java.util.List;
 //        table = "MY_SEQUENCES",
 //        pkColumnValue = "MEMBER_SEQ", allocationSize = 1)
 @Table(name = "Member")
-public class Member {
+public class Member extends BaseEntity{
 
     @Id
     @Column(name = "MEMBER_ID")
