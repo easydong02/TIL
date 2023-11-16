@@ -30,6 +30,12 @@ public class JpaMain {
             member.setUsername("John");
             em.persist(member);
 
+            Team team = new Team();
+            team.setName("teamA");
+            team.getMembers().add(member);
+
+            em.persist(team);
+
             Member member2 = new Member();
             member2.setUsername("Doe");
             em.persist(member2);
@@ -37,11 +43,9 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-//            Member findMember = em.getReference(Member.class, member.getId());
-            Member findMember = em.getReference(Member.class, member.getId());
-            System.out.println("m1 = "+ findMember.getClass());
+            Member findMember = em.find(Member.class, member.getId());
 
-            Hibernate.initialize(findMember); // 강제 초기화
+            System.out.println("m= "+findMember.getTeam().getClass());
 
             tx.commit();
         }catch (Exception e){

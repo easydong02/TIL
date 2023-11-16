@@ -22,7 +22,8 @@ public class Member extends BaseEntity{
     @Column(name = "USER_NAME", nullable = false)
     private String username;
 
-    @ManyToOne
+//    @ManyToOne(fetch = FetchType.LAZY)//Lazy로 하면 Team은 프록시 객체로 준다.
+    @ManyToOne(fetch = FetchType.EAGER)//Eager로 하면 Team은 실제 객체로 준다.
     @JoinColumn(insertable = false, updatable = false, name = "TEAM_ID") //읽기 전용 필드 옵션
     private Team team;
 
