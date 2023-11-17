@@ -19,16 +19,19 @@ public class JpaBookMain {
         tx.begin();
 
         try {
-            TypedQuery<Customer> customerTypedQuery = em.createQuery(
-                    "SELECT c FROM Customer c ORDER BY c.firstName ASC", Customer.class
-            );
+            Person person = new Person();
+            person.setName("John");
+            person.setAge(28);
 
-            List<Customer> customers = customerTypedQuery.getResultList();
+            Passport passport = new Passport();
+            passport.setCountry("KOR");
 
-            MyEntity myEntity = new MyEntity();
-            myEntity.setId(1089l);
-            myEntity.setName("john");
-            em.persist(myEntity);
+            person.setPassport(passport);
+
+            em.persist(passport);
+            em.persist(person);
+
+
 
             tx.commit();
         }catch (Exception e){
