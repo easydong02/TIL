@@ -27,6 +27,7 @@ public class JpaMain {
         try {
         }catch (Exception e){
             tx.rollback();
+            e.printStackTrace();
         }finally {
             em.close();
         }
