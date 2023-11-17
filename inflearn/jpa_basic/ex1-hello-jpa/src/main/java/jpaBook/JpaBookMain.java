@@ -19,23 +19,21 @@ public class JpaBookMain {
         tx.begin();
 
         try {
-            Person person = new Person();
-            person.setName("John");
-            person.setAge(28);
+            Student student = new Student();
+            student.setName("John");
 
-            Passport passport = new Passport();
-            passport.setCountry("KOR");
-
-            person.setPassport(passport);
-
-            em.persist(passport);
-            em.persist(person);
+            IDCard idCard = new IDCard();
+            idCard.setNumber("ABC");
+            idCard.setStudent(student);
+            student.setIdCard(idCard);
 
 
+            em.persist(student);
 
             tx.commit();
         }catch (Exception e){
             tx.rollback();
+            e.printStackTrace();
         }finally {
             em.close();
         }
