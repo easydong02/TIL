@@ -26,21 +26,11 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Child child = new Child();
-            Child child2 = new Child();
+            Member member = new Member();
+            member.setUsername("john");
+            member.setAddress(new Address("seoul","daerim","07414"));
 
-            Parent parent = new Parent();
-
-            parent.addChild(child);
-            parent.addChild(child2);
-
-            em.persist(parent);
-
-            em.flush();
-            em.clear();
-
-            Parent findParent = em.find(Parent.class, parent.getId());
-            findParent.getChildList().clear();
+            em.persist(member);
 
             tx.commit();
         }catch (Exception e){

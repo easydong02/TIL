@@ -5,13 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-//@SequenceGenerator(name = "member_seq_generator", sequenceName = "mem_seq", initialValue = 1, allocationSize = 50)
-//@TableGenerator(
-//        name = "MEMBER_SEQ_GENERATOR",
-//        table = "MY_SEQUENCES",
-//        pkColumnValue = "MEMBER_SEQ", allocationSize = 1)
 @Table(name = "Member")
-public class Member extends BaseEntity{
+public class Member{
 
     @Id
     @Column(name = "MEMBER_ID")
@@ -33,6 +28,27 @@ public class Member extends BaseEntity{
 
     @OneToMany(mappedBy = "member")
     private List<MemberProduct> memberProducts = new ArrayList<>();
+
+    @Embedded
+    private Period period;
+    @Embedded
+    private Address address;
+
+    public Period getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public Long getId() {
         return id;
