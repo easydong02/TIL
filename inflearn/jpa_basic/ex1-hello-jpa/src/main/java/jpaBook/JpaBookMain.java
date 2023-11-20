@@ -1,6 +1,7 @@
 package jpaBook;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 
 public class JpaBookMain {
@@ -22,11 +23,9 @@ public class JpaBookMain {
             Student student = new Student();
             student.setName("John");
 
-            IDCard idCard = new IDCard();
-            idCard.setNumber("ABC");
-            idCard.setStudent(student);
-            student.setIdCard(idCard);
-
+            Course course = new Course();
+            course.setName("Math");
+            student.addCourse(course);
 
             em.persist(student);
 

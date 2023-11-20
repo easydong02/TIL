@@ -1,6 +1,8 @@
 package jpaBook;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Student {
@@ -11,6 +13,12 @@ public class Student {
     private String name;
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
     private IDCard idCard;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "student_course",
+    joinColumns = @JoinColumn(name = "student_id"),
+    inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private Set<Course> courses = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -34,5 +42,18 @@ public class Student {
 
     public void setIdCard(IDCard idCard) {
         this.idCard = idCard;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
+
+    public void addCourse(Course course){
+        getCourses().add(course);
+        course.getStudents().add(this);
     }
 }
