@@ -1,8 +1,6 @@
 package jpaBook;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
 
 public class JpaBookMain {
 
@@ -20,14 +18,14 @@ public class JpaBookMain {
         tx.begin();
 
         try {
-            Student student = new Student();
-            student.setName("John");
+            Author author = new Author();
+            author.setName("John");
+            Poem poem = new Poem();
+            poem.setTitle("bookA");
 
-            Class aClass = new Class();
-            aClass.setName("A");
-            student.addClass(aClass);
+            author.getPoems().add(poem);
 
-            em.persist(student);
+            em.persist(author);
 
             tx.commit();
         }catch (Exception e){
