@@ -24,6 +24,10 @@ public class Student {
     @JoinColumn(name = "contact_id")
     private Contact contact;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "class_id")
+    private Class myclass;
+
     public Contact getContact() {
         return contact;
     }
@@ -67,5 +71,18 @@ public class Student {
     public void addCourse(Course course){
         getCourses().add(course);
         course.getStudents().add(this);
+    }
+
+    public void addClass(Class myclass){
+        setMyclass(myclass);
+        myclass.getStudents().add(this);
+    }
+
+    public Class getMyclass() {
+        return myclass;
+    }
+
+    public void setMyclass(Class myclass) {
+        this.myclass = myclass;
     }
 }

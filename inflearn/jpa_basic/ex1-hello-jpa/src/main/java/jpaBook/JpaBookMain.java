@@ -23,12 +23,9 @@ public class JpaBookMain {
             Student student = new Student();
             student.setName("John");
 
-            Contact contact = new Contact();
-            contact.setEmail("easydong02@mgmail.com");
-            contact.setAddress("서울");
-            contact.setPhone("010-6645-2753");
-
-            student.setContact(contact);
+            Class aClass = new Class();
+            aClass.setName("A");
+            student.addClass(aClass);
 
             em.persist(student);
 
