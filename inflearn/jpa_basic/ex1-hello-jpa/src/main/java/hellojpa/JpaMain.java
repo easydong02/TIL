@@ -8,6 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public class JpaMain {
 
@@ -27,10 +28,38 @@ public class JpaMain {
 
         try {
             Member member = new Member();
-            member.setUsername("john");
-            member.setAddress(new Address("seoul","daerim","07414"));
+            member.setUsername("John");
+            member.setAddress(new Address("homeCity","street","1000"));
+
+            member.getFavoriteFoods().add("치킨");
+            member.getFavoriteFoods().add("족발");
+            member.getFavoriteFoods().add("피자");
+
+            member.getAddressHistory().add(new Address("old1","street","1000"));
+            member.getAddressHistory().add(new Address("old2","street","1000"));
 
             em.persist(member);
+
+            em.flush();
+            em.clear();
+
+            System.out.println("=========================start select=========================");
+            Member findMember = em.find(Member.class, member.getId());
+
+            List<Address> addressHistory = findMember.getAddressHistory();
+            for(Address address : addressHistory){
+                System.out.println("address = "+address.getCity());
+            }
+
+            Set<String> foods = findMember.getFavoriteFoods();
+            for(String food : foods){
+                System.out.println("food = "+food);
+            }
+            System.out.println("=========================start update=========================");
+
+            //homecity -> newcity 값 타입은 새로 갈아 끼워야 한다. setter를 통해서 그 안의 속성을 변경하면 안 된다!
+            Address address = findMember.getAddress();
+            findMember.setAddress(new Address("newCity",address.getStreet(), address.getZipcode()));
 
             tx.commit();
         }catch (Exception e){
