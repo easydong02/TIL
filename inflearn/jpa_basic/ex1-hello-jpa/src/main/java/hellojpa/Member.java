@@ -44,11 +44,16 @@ public class Member{
     @Column(name = "FOOD_NAME")
     private Set<String> favoriteFoods = new HashSet<>();
 
-    @ElementCollection
-    @CollectionTable(name = "ADDRESS", joinColumns =
-        @JoinColumn(name = "MEMBER_ID")
-    )
-    private List<Address> addressHistory = new ArrayList<>();
+    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AddressEntity> addressEntityList = new ArrayList<>();
+
+    public List<AddressEntity> getAddressEntityList() {
+        return addressEntityList;
+    }
+
+    public void setAddressEntityList(List<AddressEntity> addressEntityList) {
+        this.addressEntityList = addressEntityList;
+    }
 
     public Set<String> getFavoriteFoods() {
         return favoriteFoods;
@@ -56,14 +61,6 @@ public class Member{
 
     public void setFavoriteFoods(Set<String> favoriteFoods) {
         this.favoriteFoods = favoriteFoods;
-    }
-
-    public List<Address> getAddressHistory() {
-        return addressHistory;
-    }
-
-    public void setAddressHistory(List<Address> addressHistory) {
-        this.addressHistory = addressHistory;
     }
 
     public Period getPeriod() {

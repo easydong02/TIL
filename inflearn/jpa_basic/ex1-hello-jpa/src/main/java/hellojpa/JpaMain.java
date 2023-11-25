@@ -35,8 +35,14 @@ public class JpaMain {
             member.getFavoriteFoods().add("족발");
             member.getFavoriteFoods().add("피자");
 
-            member.getAddressHistory().add(new Address("old1","street","1000"));
-            member.getAddressHistory().add(new Address("old2","street","1000"));
+            AddressEntity addressEntity1= new AddressEntity("old1","street","10000");
+            AddressEntity addressEntity2= new AddressEntity("old2","street","10000");
+
+            addressEntity1.setMember(member);
+            addressEntity2.setMember(member);
+
+            member.getAddressEntityList().add(addressEntity1);
+            member.getAddressEntityList().add(addressEntity2);
 
             em.persist(member);
 
@@ -46,9 +52,9 @@ public class JpaMain {
             System.out.println("=========================start select=========================");
             Member findMember = em.find(Member.class, member.getId());
 
-            List<Address> addressHistory = findMember.getAddressHistory();
-            for(Address address : addressHistory){
-                System.out.println("address = "+address.getCity());
+            List<AddressEntity> addressHistory = findMember.getAddressEntityList();
+            for(AddressEntity addressEntity : addressHistory){
+                System.out.println("address= " +addressEntity.getAddress().getCity());
             }
 
             Set<String> foods = findMember.getFavoriteFoods();
@@ -66,9 +72,8 @@ public class JpaMain {
             findMember.getFavoriteFoods().add("한식");
 
             //주소이력 바꾸기 equals와 hashCode를 재정의 했기 때문에 new 해도 비교가 가능!
-            findMember.getAddressHistory().remove(new Address("old1","street","1000"));
-            findMember.getAddressHistory().add(new Address("newCity1","street","1000"));
-
+//            findMember.getAddressEntityList().remove(new Address("old1","street","10000"));
+//            findMember.getAddressEntityList().add(new Address("newCity1","street","10000"));
 
             tx.commit();
         }catch (Exception e){
