@@ -61,6 +61,15 @@ public class JpaMain {
             Address address = findMember.getAddress();
             findMember.setAddress(new Address("newCity",address.getStreet(), address.getZipcode()));
 
+            //치킨 -> 한식 이건 하나의 String이 값타입이라서 update도 안 된다.
+            findMember.getFavoriteFoods().remove("치킨");
+            findMember.getFavoriteFoods().add("한식");
+
+            //주소이력 바꾸기 equals와 hashCode를 재정의 했기 때문에 new 해도 비교가 가능!
+            findMember.getAddressHistory().remove(new Address("old1","street","1000"));
+            findMember.getAddressHistory().add(new Address("newCity1","street","1000"));
+
+
             tx.commit();
         }catch (Exception e){
             tx.rollback();
