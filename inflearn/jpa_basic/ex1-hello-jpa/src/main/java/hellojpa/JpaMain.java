@@ -27,53 +27,8 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setUsername("John");
-            member.setAddress(new Address("homeCity","street","1000"));
-
-            member.getFavoriteFoods().add("치킨");
-            member.getFavoriteFoods().add("족발");
-            member.getFavoriteFoods().add("피자");
-
-            AddressEntity addressEntity1= new AddressEntity("old1","street","10000");
-            AddressEntity addressEntity2= new AddressEntity("old2","street","10000");
-
-            addressEntity1.setMember(member);
-            addressEntity2.setMember(member);
-
-            member.getAddressEntityList().add(addressEntity1);
-            member.getAddressEntityList().add(addressEntity2);
-
-            em.persist(member);
-
-            em.flush();
-            em.clear();
-
-            System.out.println("=========================start select=========================");
-            Member findMember = em.find(Member.class, member.getId());
-
-            List<AddressEntity> addressHistory = findMember.getAddressEntityList();
-            for(AddressEntity addressEntity : addressHistory){
-                System.out.println("address= " +addressEntity.getAddress().getCity());
-            }
-
-            Set<String> foods = findMember.getFavoriteFoods();
-            for(String food : foods){
-                System.out.println("food = "+food);
-            }
-            System.out.println("=========================start update=========================");
-
-            //homecity -> newcity 값 타입은 새로 갈아 끼워야 한다. setter를 통해서 그 안의 속성을 변경하면 안 된다!
-            Address address = findMember.getAddress();
-            findMember.setAddress(new Address("newCity",address.getStreet(), address.getZipcode()));
-
-            //치킨 -> 한식 이건 하나의 String이 값타입이라서 update도 안 된다.
-            findMember.getFavoriteFoods().remove("치킨");
-            findMember.getFavoriteFoods().add("한식");
-
-            //주소이력 바꾸기 equals와 hashCode를 재정의 했기 때문에 new 해도 비교가 가능!
-//            findMember.getAddressEntityList().remove(new Address("old1","street","10000"));
-//            findMember.getAddressEntityList().add(new Address("newCity1","street","10000"));
+            List<Member> resultList = em.createQuery("select m from Member m where m.username like '%kim%'", Member.class)
+                    .getResultList();
 
             tx.commit();
         }catch (Exception e){
