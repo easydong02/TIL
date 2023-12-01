@@ -196,5 +196,8 @@ gradle-app.setting
 # SonarLint
 sonarlint/
 
+#target
+target/
+
 
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij,windows,gradle
