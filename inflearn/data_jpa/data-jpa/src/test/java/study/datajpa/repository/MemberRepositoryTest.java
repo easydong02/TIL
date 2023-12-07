@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.entity.Member;
 import study.datajpa.entity.Team;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -53,5 +54,20 @@ class MemberRepositoryTest {
         memberRepository.save(member2);
         memberRepository.save(member3);
         memberRepository.save(member4);
+    }
+
+    @Test
+    public void findByUsernameAndAgeGreaterThan(){
+        Member m1 = new Member("AAA", 10);
+        Member m2 = new Member("AAA", 20);
+
+        memberRepository.save(m1);
+        memberRepository.save(m2);
+
+        List<Member> result = memberRepository.findByUsernameAndAgeGreaterThan("AAA", 15);
+
+        assertThat(result.get(0).getUsername()).isEqualTo(m2.getUsername());
+        assertThat(result.get(0).getAge()).isEqualTo(m2.getAge());
+        assertThat(result.size()).isEqualTo(1);
     }
 }
