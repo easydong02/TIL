@@ -10,6 +10,7 @@ import study.datajpa.entity.Member;
 import study.datajpa.entity.Team;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -123,4 +124,22 @@ class MemberRepositoryTest {
             System.out.println(memberDto);
         }
     }
+
+    @Test
+    public void returnType(){
+        Member m1 = new Member("AAA", 10);
+        Member m2 = new Member("BBB", 20);
+
+        memberRepository.save(m1);
+        memberRepository.save(m2);
+
+        List<Member> aaa = memberRepository.findListByUsername("AAA");
+
+        List<Member> bbb = memberRepository.findListByUsername("ASEWFEF");
+        Member member = memberRepository.findMemberByUsername("ASDFASDF");
+
+        System.out.println("result = "+bbb.size()); //empty 컬렉션이 반환돼서 null이 아니다.
+        System.out.println("result2 = "+ member); //단건은 또 null로 나온다.
+    }
+
 }
