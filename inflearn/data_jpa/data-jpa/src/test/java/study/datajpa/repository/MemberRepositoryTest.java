@@ -254,4 +254,32 @@ class MemberRepositoryTest {
             System.out.println("member.team = " + member.getTeam().getName()); // 이때 team을 select로 가져옴.
         }
     }
+
+    @Test
+    public void queryHint(){
+        //given
+        Member member1 = memberRepository.save(new Member("member1", 10));
+
+        em.flush();
+        em.clear();
+
+        //when
+//        Member findMember = memberRepository.findById(member1.getId()).get();
+//        findMember.setUsername("member2"); //데이터 변경됨
+
+        Member findMember = memberRepository.findReadOnlyByUsername("member1");
+        findMember.setUsername("member2"); //데이터 변경 안 됨.
+    }
+
+    @Test
+    public void lockTest(){
+        //given
+        Member member1 = memberRepository.save(new Member("member1", 10));
+
+        em.flush();
+        em.clear();
+
+        //when
+        List<Member> result = memberRepository.findLockByUsername("member1");
+    }
 }
