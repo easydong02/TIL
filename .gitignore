@@ -51,7 +51,7 @@ cmake-build-*/
 .idea/**/mongoSettings.xml
 
 # UI Designer
-.idea/**/uiDesigner.xml
+.idea/uiDesigner.xml
 
 # File-based project format
 *.iws
