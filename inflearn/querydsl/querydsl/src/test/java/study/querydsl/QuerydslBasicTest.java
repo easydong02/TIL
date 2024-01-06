@@ -1,9 +1,11 @@
 package study.querydsl;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
@@ -618,6 +620,60 @@ public class QuerydslBasicTest {
         }
     }
 
+    @Test
+    public void dynamicQuery_booleanBuilder(){
+        String usernameParam = null;
+        Integer ageParam = 10;
 
+        List<Member> result = searchMember(usernameParam, ageParam);
+        assertThat(result.size()).isEqualTo(1);
+    }
 
+    private List<Member> searchMember(String usernameParam, Integer ageParam) {
+        BooleanBuilder builder = new BooleanBuilder();
+        if(usernameParam != null){
+            builder.and(member.username.eq(usernameParam));
+        }
+        if(ageParam != null){
+            builder.and(member.age.eq(ageParam));
+        }
+
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .where(builder)
+                .fetch();
+
+        return result;
+    }
+
+    @Test
+    public void dynamicQuery_whereParam(){
+        String usernameParam = null;
+        Integer ageParam = 10;
+
+        List<Member> result = searchMember2(usernameParam, ageParam);
+        assertThat(result.size()).isEqualTo(1);
+    }
+
+    private List<Member> searchMember2(String usernameCon, Integer ageCon) {
+
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .where(usernameEq(usernameCon), ageEq(ageCon))
+                .fetch();
+
+        return result;
+    }
+
+    private Predicate ageEq(Integer ageCon) {
+        if(ageCon == null)return null;
+        return member.age.eq(ageCon);
+    }
+
+    private Predicate usernameEq(String usernameCon) {
+        if(usernameCon == null)return null;
+
+        return member.username.eq(usernameCon);
+
+    }
 }
