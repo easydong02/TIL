@@ -9,6 +9,4 @@ import java.util.List;
 
 public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom{
     List<Member> findByUsername(String username);
-
-    List<MemberTeamDto> search(MemberSearchCondition condition);
 }
