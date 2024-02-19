@@ -12,19 +12,24 @@ import hello.core.order.OrderServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class AppConfig {
 
+    @Bean
     public MemberService memberService(){
         return new MemberServiceImpl(getMemberRepository());
     }
 
+    @Bean
     public static MemberRepository getMemberRepository() {
         return new MemoryMemberRepository();
     }
+    @Bean
     public OrderService orderService(){
         return new OrderServiceImpl(getMemberRepository(), getDiscountPolicy());
     }
 
+    @Bean
     public DiscountPolicy getDiscountPolicy(){
         return new RateDiscountPolicy();
     }
